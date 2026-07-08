@@ -3,19 +3,19 @@
     "id": 1,
     "name": "Principles of Modern Programming",
     "price": 90,
-    "stock": 15
+    "stock": 0
   },
   {
     "id": 2,
     "name": "Clean Code",
     "price": 120,
-    "stock": 8
+    "stock": 0
   },
   {
     "id": 3,
     "name": "The Man Who Mistook His Wife for a Hat",
-    "price": 65,
-    "stock": 4
+    "price": 67,
+    "stock": 0
   },
   {
     "id": 4,

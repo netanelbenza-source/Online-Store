@@ -1,4 +1,5 @@
 import express from 'express'
+import {menjer_rouer_products} from './calcultor.js'
 
 const PORT = process.env.PORT 
 
@@ -18,7 +19,9 @@ server.get('/health',(req,res)=>{
 
 
 
-
+server.get('/products',(req,res)=>{
+     menjer_rouer_products(req,res)
+})
 
 
 
