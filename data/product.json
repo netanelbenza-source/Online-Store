@@ -1,31 +1,31 @@
 [
   {
-    "id": "1",
-    "name": "עקרונות התכנות המודרני",
-    "price": 89,
+    "id": 1,
+    "name": "Principles of Modern Programming",
+    "price": 90,
     "stock": 15
   },
   {
-    "id": "2",
+    "id": 2,
     "name": "Clean Code",
     "price": 120,
     "stock": 8
   },
   {
-    "id": "3",
-    "name": "האיש שחשב שאשתו היא כובע",
+    "id": 3,
+    "name": "The Man Who Mistook His Wife for a Hat",
     "price": 65,
     "stock": 4
   },
   {
-    "id": "4",
-    "name": "סודות האפייה הביתית",
+    "id": 4,
+    "name": "Secrets of Home Baking",
     "price": 95,
     "stock": 22
   },
   {
-    "id": "5",
-    "name": "קיצור תולדות האנושות",
+    "id": 5,
+    "name": "Sapiens: A Brief History of Humankind",
     "price": 78,
     "stock": 0
   }
