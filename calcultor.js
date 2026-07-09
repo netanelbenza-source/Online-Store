@@ -6,6 +6,8 @@ import {
   Returns_an_up_to_date_dictionary,
 } from "./utils.js";
 
+
+
 export async function menjer_rouer_products(req, res) {
   try {
     const obj_of_products = await readDataFromJson("./data/product.json");
@@ -26,6 +28,9 @@ export async function menjer_rouer_products(req, res) {
     return;
   }
 }
+
+
+
 
 export async function menjer_rouer_cart(req, res) {
   try {
@@ -49,6 +54,9 @@ export async function menjer_rouer_cart(req, res) {
   }
 }
 
+
+
+
 export async function manger_add_item(req, res) {
   try {
     const is_match = check_budy(req.body);
@@ -63,6 +71,36 @@ export async function manger_add_item(req, res) {
     );
     await writeDataToJson("./data/Cltents.json", get_update);
     res.json({ message: "The item has been successfully added to the cart." });
+  } catch (err) {
+    res.status(500).json({ message: "Server upload problem" });
+    return;
+  }
+}
+
+
+
+
+export async function menjerDeleteItem(req, res) {
+  try {
+    if (
+      !req.body ||
+      Object.keys(req.params).length === 0 ||
+      !Object.keys(req.body).includes("customerId")
+    ) {
+      res.status(400).json({ massage: "Bed request" });
+      return;
+    }
+    const obj_of_Cliants = await readDataFromJson("./data/Clients.json");
+    obj_of_Cliants.forEach((client) => {
+      if (client.customerId === req.body.customerId) {
+        client.cart = client.cart.filter(
+          (product) => product.productId !== +req.params.productId,
+          );
+      }
+    });
+    await writeDataToJson("./data/Clients.json", obj_of_Cliants);
+    res.json({ message: "The product was successfully removed." })
+    return;
   } catch (err) {
     res.status(500).json({ message: "Server upload problem" });
     return;

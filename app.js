@@ -1,10 +1,11 @@
 import express from 'express'
-import {menjer_rouer_products,menjer_rouer_cart,manger_add_item} from './calcultor.js'
+import {menjer_rouer_products,menjer_rouer_cart,manger_add_item,menjerDeleteItem} from './calcultor.js'
 
 const PORT = process.env.PORT 
 const Product_Data = process.env.Product_Data
 const cart_Data = process.env.cart_Data
 const add_item  = process.env.add_item
+const delete_item = process.env.delete_item
 
 
 
@@ -41,7 +42,11 @@ server.post(add_item,(req,res)=>{
 
 
 
-
+server.delete(delete_item,(req,res) =>{
+    menjerDeleteItem(req,res)
+    
+})
+    
 
 
 
