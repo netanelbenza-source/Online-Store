@@ -2,11 +2,10 @@ import { readDataFromJson, writeDataToJson } from "./Data_Manager.js";
 import {
   Checks_if_a_value_exists,
   searchQuery,
-  check_budy,
+  check_body,
   Returns_an_up_to_date_dictionary,
+  checkBalanceRequestParams,
 } from "./utils.js";
-
-
 
 export async function menjer_rouer_products(req, res) {
   try {
@@ -28,9 +27,6 @@ export async function menjer_rouer_products(req, res) {
     return;
   }
 }
-
-
-
 
 export async function menjer_rouer_cart(req, res) {
   try {
@@ -54,12 +50,9 @@ export async function menjer_rouer_cart(req, res) {
   }
 }
 
-
-
-
 export async function manger_add_item(req, res) {
   try {
-    const is_match = check_budy(req.body);
+    const is_match = check_body(req.body);
     if (!is_match) {
       res.status(400).json({ massage: "Bed request" });
       return;
@@ -77,9 +70,6 @@ export async function manger_add_item(req, res) {
   }
 }
 
-
-
-
 export async function menjerDeleteItem(req, res) {
   try {
     if (
@@ -95,14 +85,35 @@ export async function menjerDeleteItem(req, res) {
       if (client.customerId === req.body.customerId) {
         client.cart = client.cart.filter(
           (product) => product.productId !== +req.params.productId,
-          );
+        );
       }
     });
     await writeDataToJson("./data/Clients.json", obj_of_Cliants);
-    res.json({ message: "The product was successfully removed." })
+    res.json({ message: "The product was successfully removed." });
     return;
   } catch (err) {
     res.status(500).json({ message: "Server upload problem" });
     return;
+  }
+}
+
+export async function menjer_show_balance(req, res) {
+  try {
+    const is_proper = checkBalanceRequestParams(req.query);
+    if (!is_proper) {
+      res.status(400).json({ massage: "Bed request" });
+    }
+    const obj_of_Cliants = await readDataFromJson("./data/Clients.json");
+    const get_cliant = obj_of_Cliants.find(
+      (obj) => obj.customerId === req.query.customerId,
+    );
+    if (get_cliant) {
+      res.json({ "Courent Balance": get_cliant.balance });
+      return;
+    }
+    res.status(404).json({ message: "No results found." })
+    return;
+  } catch (err) {
+    res.status(500).json({ message: "Server upload problem" });
   }
 }

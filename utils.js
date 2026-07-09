@@ -25,7 +25,7 @@ export function searchQuery(data, query) {
   return Match;
 }
 
-export function check_budy(body) {
+export function check_body(body) {
   const Original_list = ["customerId", "productId", "quantity"];
   const Match = Original_list.every((string) =>
     Object.keys(body).includes(string),
@@ -48,4 +48,12 @@ export function Returns_an_up_to_date_dictionary(Clients,new_obj){
     })
     return update_clients
 }
+
+
+export function checkBalanceRequestParams(req){
+    if(!req || ! Object.keys(req).includes('customerId') || Object.keys(req).length > 1){
+        return false}
+        return true
+}
+
 
