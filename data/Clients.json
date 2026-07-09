@@ -4,12 +4,16 @@
     "balance": 250,
     "cart": [
       {
-        "productId": 1,
-        "quantity": 2
+        "productId": 7,
+        "quantity": 8
       },
       {
-        "productId": 3,
-        "quantity": 1
+        "productId": 7,
+        "quantity": 0
+      },
+      {
+        "productId": 7,
+        "quantity": 0
       }
     ],
     "createdAt": "2026-01-15T08:30:00Z"

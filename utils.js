@@ -24,3 +24,28 @@ export function searchQuery(data, query) {
   });
   return Match;
 }
+
+export function check_budy(body) {
+  const Original_list = ["customerId", "productId", "quantity"];
+  const Match = Original_list.every((string) =>
+    Object.keys(body).includes(string),
+  );
+  if (!Match || Object.keys(body).length < 3 || +body.quantity < 1){
+    return false;
+  }
+  return true;
+}
+
+
+export function Returns_an_up_to_date_dictionary(Clients,new_obj){
+    const{customerId,productId,quantity} = new_obj
+    const update_clients = Clients.map(obj =>{
+        if(obj.customerId === customerId){
+            obj.cart.push({productId,quantity})
+            return obj
+        }
+        return obj
+    })
+    return update_clients
+}
+
