@@ -4,6 +4,8 @@ import fs from 'fs/promises'
 
 export async function readDataFromJson(path) {
     const lodingData  = await fs.readFile(path,'utf-8')
+    if (!lodingData || lodingData.trim == ""){
+        return [] }
     const createObj = JSON.parse(lodingData)
     return createObj 
     

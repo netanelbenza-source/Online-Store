@@ -5,7 +5,13 @@ import {
   check_body,
   Returns_an_up_to_date_dictionary,
   checkBalanceRequestParams,
-} from "./utils.js";
+  IsTheCartEmpty,
+  InventoryCheck,
+  check_balance,
+  return_customer,
+  Create_order,
+  Updating_the_balance_sheet
+ } from "./utils.js";
 
 export async function menjer_rouer_products(req, res) {
   try {
@@ -117,3 +123,51 @@ export async function menjer_show_balance(req, res) {
     res.status(500).json({ message: "Server upload problem" });
   }
 }
+
+
+
+export async function menjerCheckOut(req, res) {
+    if(!req.body || !Object.keys(req.body).includes('customerId')){
+        res.status(400).json({ message: "bed request." })
+        return;
+    }
+     
+    const obj_of_products = await readDataFromJson('./data/product.json')
+    const obj_of_clients = await readDataFromJson('./data/Clients.json')
+    const{customerId}=req.body
+    const client = return_customer(customerId,obj_of_clients)
+    if(!client){
+    res.status(404).json({ message: "No results found." })
+    return;
+    } 
+    
+    if(!IsTheCartEmpty(client)){
+    res.status(400).json({ message: "The shopping cart is empty." })
+    return;}
+    
+    if(InventoryCheck(client,obj_of_products).length === 0){
+      res.status(400).json({ message: "Out of stock" })
+      return;  
+    }
+    
+    if(!check_balance(client,obj_of_products)){
+        res.status(400).json({ message: "There isn't enough money in the account." })
+        return;  
+    }
+     
+    const List_of_products_in_stock = InventoryCheck(client,obj_of_products)
+    const obj_of_orders = await readDataFromJson('./data/Orders.json')
+    const create_order  = Create_order(customerId,obj_of_products,obj_of_orders,List_of_products_in_stock)
+    obj_of_orders.push(create_order)
+    await writeDataToJson('./data/Orders.json',obj_of_orders)
+    const Total_amount_to_be_deducted = create_order.total_order 
+    const cliant_to_update = Updating_the_balance_sheet(Total_amount_to_be_deducted,obj_of_clients,customerId)
+    await writeDataToJson('./data/Clients.json',cliant_to_update)
+    res.json({message:'The product was purchased successfully.'})
+    
+
+
+    
+}   
+
+

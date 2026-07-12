@@ -1,5 +1,5 @@
 import express from 'express'
-import {menjer_rouer_products,menjer_rouer_cart,manger_add_item,menjerDeleteItem,menjer_show_balance} from './calcultor.js'
+import {menjer_rouer_products,menjer_rouer_cart,manger_add_item,menjerDeleteItem,menjer_show_balance,menjerCheckOut} from './calcultor.js'
 
 const PORT = process.env.PORT 
 const Product_Data = process.env.Product_Data
@@ -7,6 +7,7 @@ const cart_Data = process.env.cart_Data
 const add_item  = process.env.add_item
 const delete_item = process.env.delete_item
 const show_balance = process.env.show_balance
+const checkout = process.env.checkout
 
 
 
@@ -16,7 +17,7 @@ server.use(express.json())
 
 
 server.get('/',(req,res) =>{
-    res.json({message: 'The server running now'})
+ res.json({message: 'The server running now'})
 })
 
 
@@ -52,6 +53,14 @@ server.delete(delete_item,(req,res) =>{
 
 server.get(show_balance,(req,res)=>{
     menjer_show_balance(req,res)
+})
+
+
+
+
+server.post(checkout,(req,res)=>{
+     menjerCheckOut(req,res)
+
 })
 
 
