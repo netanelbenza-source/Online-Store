@@ -88,7 +88,6 @@ export function check_balance(client, products) {
 
 export function return_customer(customerId, obj_of_clients) {
   const Match = obj_of_clients.find((obj) => obj.customerId == customerId);
-  console.log(Match)
   return Match;
 }
 

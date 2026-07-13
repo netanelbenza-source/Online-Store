@@ -171,3 +171,23 @@ export async function menjerCheckOut(req, res) {
 }   
 
 
+
+export async function get_Order_History(req,res){
+      const query_not_exists = Checks_if_a_value_exists(req.query) 
+      if(query_not_exists || ! Object.keys(req.query).includes('id_customer')){
+        res.status(400).json({message:'bed_request'})
+        return
+      }
+      const orders = await readDataFromJson('./data/Orders.json')
+      const {id_customer}= req.query
+      const customer_order = orders.filter(order => order.customer === + id_customer)
+      console.log(customer_order)
+      if(customer_order.length === 0){
+        res.status(404).json({message: "No results found."})
+        return
+      }
+      res.json({Order_History:customer_order})
+      return
+}  
+
+
