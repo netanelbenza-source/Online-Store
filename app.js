@@ -1,7 +1,7 @@
 import express from "express";
 import {
-  menjer_rouer_products,
-  menjer_rouer_cart,
+  menjer_rouer_Product_Data,
+  menjer_rouer_cart_Data,
   manger_add_item,
   menjerDeleteItem,
   menjer_show_balance,
@@ -31,11 +31,11 @@ server.get("/health", (req, res) => {
 });
 
 server.get(Product_Data, (req, res) => {
-  menjer_rouer_products(req, res);
+  menjer_rouer_Product_Data(req, res);
 });
 
 server.get(cart_Data, (req, res) => {
-  menjer_rouer_cart(req, res);
+  menjer_rouer_cart_Data(req, res);
 });
 
 server.post(add_item, (req, res) => {
